@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert, Image} from 'react-native';
 import Task from './Task'
 
-
 const storeData = async (value) => {
     try {
       await AsyncStorage.setItem('items', value)
@@ -24,9 +23,8 @@ const getData = async () => {
 }
 
 
-
-
 export default class Main extends React.Component {
+  
     constructor(props){
         super(props)
         //const items= JSON.parse(localStorage.getItem('items'))
@@ -37,6 +35,7 @@ export default class Main extends React.Component {
         const values = getData().then((data)=>{
           this.setState({taskArray:data})
         })
+        
     }
 
     addNote(){
@@ -101,7 +100,7 @@ return (
             source={require('./icon.png')}/>
             <Text style={styles.headerText}>TODO</Text>
             <TouchableOpacity style={styles.aboutButton} onPress={this.showMore.bind(this)}>
-              <Feather name="more-vertical" size={24} color="black" />
+              <Feather name="more-vertical" size={24} color="white" />
             </TouchableOpacity>
         </View>
 
@@ -125,7 +124,7 @@ return (
             </TextInput>
         </View>
         <TouchableOpacity onPress={this.addNote.bind(this)} style={styles.addButton}>
-            <Text style={styles.addButtonText}><Ionicons name="add" size={50} color="black" /></Text>
+            <Text style={styles.addButtonText}><Ionicons name="add" size={50} color="white" /></Text>
         </TouchableOpacity>
         
     </View>
@@ -139,16 +138,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', 
   },
   header:{
-    backgroundColor:'orange',
+    backgroundColor:'#FFA500',
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth:10,
-    borderBottomColor:'#ddd',
+    borderBottomWidth:2,
+    borderBottomColor:'#EC0D00',
     paddingTop:30
   },
   headerText:{
-    fontSize:20,
-    padding:25
+    fontSize:40,
+    color:'white',
+    padding:5,
+    fontFamily: 'Oswald_700Bold'
   },
   logo:{
     width:50,
@@ -158,6 +159,15 @@ const styles = StyleSheet.create({
     left:20,
     alignItems:'center',
     justifyContent:'center',
+  },
+  aboutButton:{
+    position:'absolute',
+    padding:10,  
+    right:10,
+    top:40,
+    alignItems:'center',
+    justifyContent:'center',
+    color: 'white',
   },
   scrollContainer:{
     flex:1,
@@ -174,16 +184,16 @@ const styles = StyleSheet.create({
     alignSelf:'stretch',
     color:"#fff",
     padding:20,
-    backgroundColor: "#252525",
+    backgroundColor: "#FFA500",
     borderTopWidth:2,
-    borderTopColor:'#ddd'
+    borderTopColor:'#EC0D00'
   },
   addButton:{
       position:'absolute',
       zIndex:11,
       right:20,
       bottom:90,
-      backgroundColor:'orange',
+      backgroundColor:'#FFA500',
       width:90,
       height:90,
       borderRadius:50,
@@ -194,14 +204,6 @@ const styles = StyleSheet.create({
   addButtonText:{
       color:"#fff",
       fontSize:24
-  },
-  aboutButton:{
-    position:'absolute',
-    padding:10,  
-    right:10,
-    top:40,
-    alignItems:'center',
-    justifyContent:'center',
   },
   scrollView: {
     height: '100%',
