@@ -24,10 +24,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-9184919353125064~8643678406"
+      },
       "package": "com.prm.todo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-ads-admob",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ]
+    ]
   }
 }

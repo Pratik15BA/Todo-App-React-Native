@@ -3,7 +3,13 @@ import { Ionicons, AntDesign, Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert, Image } from 'react-native';
 import Task from './Task'
-
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+  setTestDeviceIDAsync,
+} from 'expo-ads-admob';
 const storeData = async (value) => {
   try {
     await AsyncStorage.setItem('items', value)
@@ -36,13 +42,12 @@ export default class Main extends React.Component {
     const values = getData().then((data) => {
       this.setState({ taskArray: data })
     })
-
   }
 
   addNote() {
     let flag = false
-    if(this.state.key!==''){
-      flag=true
+    if (this.state.key !== '') {
+      flag = true
     }
     if (flag) {
       let item = this.state.taskArray[this.state.key]
@@ -50,9 +55,8 @@ export default class Main extends React.Component {
       this.setState({ taskArray: this.state.taskArray })
       this.setState({ taskText: '', key: '' })
       storeData(JSON.stringify(this.state.taskArray))
-    } 
-    else if(this.state.taskText) {
-      console.log("adding")
+    }
+    else if (this.state.taskText) {
       const monthNames = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
       ];
@@ -72,7 +76,7 @@ export default class Main extends React.Component {
 
   deleteTask(key) {
     this.state.taskArray.splice(key, 1)
-    this.setState({ taskArray: this.state.taskArray })
+    this.setState({ taskArray: this.state.taskArray, key: '', taskText: '' })
     //localStorage.setItem('items', JSON.stringify(this.state.taskArray));
     storeData(JSON.stringify(this.state.taskArray))
   }
@@ -93,14 +97,12 @@ export default class Main extends React.Component {
   showMore() {
     Alert.alert(
       "About Us",
-      "This Application is developed by Pratik Moharkar.",
+      "This Application is developed by PRM.",
       [
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "OK" }
       ],
       {
         cancelable: true,
-        onDismiss: () =>
-          console.log("Alert Closed")
       }
     );
   }
@@ -124,11 +126,23 @@ export default class Main extends React.Component {
 
 
 
+
+
+        <AdMobBanner
+          bannerSize="fullBanner"
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          onDidFailToReceiveAdWithError={this.bannerError} />
+
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainer}>
           {tasks}
         </ScrollView>
+
+        <AdMobBanner
+          bannerSize="fullBanner" style={styles.adStyle}
+          adUnitID="ca-app-pub-3940256099942544/6300978111"
+          onDidFailToReceiveAdWithError={this.bannerError} />
 
         <View style={styles.footer}>
           <TextInput
@@ -150,6 +164,9 @@ export default class Main extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  adStyle: {
+    marginBottom: 70,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -160,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 2,
     borderBottomColor: '#EC0D00',
-    paddingTop: 30
+    paddingTop: 40
   },
   headerText: {
     fontSize: 40,
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     position: 'absolute',
-    top: 40,
+    top: 50,
     left: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -181,14 +198,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: 10,
     right: 10,
-    top: 40,
+    top: 60,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
   },
   scrollContainer: {
     flex: 1,
-    marginBottom: '100'
   },
   footer: {
     position: 'absolute',
@@ -228,7 +244,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     borderColor: 'black',
-    marginBottom: 60,
   },
   contentContainer: {
     justifyContent: 'center',
