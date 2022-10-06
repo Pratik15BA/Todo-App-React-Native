@@ -1,69 +1,122 @@
 import React from 'react';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import { Ionicons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 
 export default class Task extends React.Component {
-    render(){
-  return (
-    <View key={this.props.keyval} style={styles.task}>
-        <Text style={styles.taskText}>{this.props.val.date}</Text>
-        <Text style={this.props.val.completed ? styles.strike : styles.taskText}>{this.props.val.task}</Text>
 
-        <TouchableOpacity onPress={this.props.strikeMethod} style={styles.strikeButton}>
-            <Text style={styles.deleteButtonText}><AntDesign name="checkcircle" size={24} color="black" /></Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this.props.deleteMethod} style={styles.deleteButton}>
-            <Text style={styles.deleteButtonText}><AntDesign name="delete" size={24} color="black" /></Text>
-        </TouchableOpacity>
-    </View>
-    
-  );
+  constructor(props) {
+    super(props)
+    this.state = {
+      touched: false
     }
+    this.onClick = this.onClick.bind(this)
+  }
+
+  onClick() {
+    this.setState({ touched: !this.state.touched })
+  }
+  render() {
+    return (
+      <TouchableOpacity onPress={this.onClick}>
+        <View key={this.props.keyval} style={styles.task}>
+          <Text style={this.props.val.completed ? styles.dateBorder : styles.taskDate}>{this.props.val.date}</Text>
+          <Text style={this.props.val.completed ? styles.strike : styles.taskText}>{this.props.val.task}</Text>
+
+          <TouchableOpacity onPress={this.props.updateMethod} style={this.state.touched ? styles.editButton : styles.hidden}>
+            <Text style={styles.deleteButtonText}><FontAwesome name="edit" size={30} color="black" /></Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.props.strikeMethod} style={this.state.touched ? styles.strikeButton : styles.hidden}>
+            <Text style={styles.deleteButtonText}><AntDesign name="checkcircle" size={30} color="black" /></Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.props.deleteMethod} style={this.state.touched ? styles.deleteButton : styles.hidden}>
+            <Text style={styles.deleteButtonText}><AntDesign name="delete" size={30} color="black" /></Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  task:{
-    position:'relative',
-    padding:20,
-    paddingRight:100,
-    borderBottomWidth:2,
-    borderBottomColor:'#ededed'
+  hidden: {
+    display: 'none'
   },
-  taskText:{
-    paddingLeft:20,
-    borderLeftWidth:10,
-    borderLeftColor:"orange",
+  task: {
+    position: 'relative',
+    padding: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#ededed',
   },
-  strike:{
+  taskDate: {
+    paddingLeft: 20,
+    borderLeftWidth: 10,
+    borderLeftColor: "#D18700",
+    borderRightWidth: 10,
+    borderRightColor: '#D18700',
+    fontSize: 15,
+  },
+  taskText: {
+    paddingTop: 15,
+    paddingLeft: 20,
+    paddingRight: 10,
+    borderLeftWidth: 10,
+    borderLeftColor: "#D18700",
+    borderRightWidth: 10,
+    borderRightColor: '#D18700',
+    fontSize: 15,
+  },
+  strike: {
     textDecorationLine: 'line-through',
-    textDecorationColor:'red',
-    paddingLeft:20,
-    borderLeftWidth:10,
-    borderLeftColor:"orange",
-
+    textDecorationColor: 'red',
+    paddingTop: 15,
+    paddingLeft: 20,
+    paddingRight: 10,
+    borderLeftWidth: 10,
+    borderLeftColor: "#00D989",
+    borderRightWidth: 10,
+    borderRightColor: '#00D989',
+    fontSize: 15,
+    fontStyle: 'italic',
   },
-  deleteButton:{
-    position:'absolute',
-    padding:10,
-    top:10,
-      right:10,
-      bottom:10,
-      backgroundColor:'red',
-      alignItems:'center',
-      justifyContent:'center',
+  dateBorder: {
+    paddingLeft: 20,
+    borderLeftWidth: 10,
+    borderLeftColor: "#00D989",
+    borderRightWidth: 10,
+    borderRightColor: '#00D989',
+    fontSize: 15,
   },
-  strikeButton:{
-    position:'absolute',
-    padding:10,
-    top:10,
-      right:70,
-      bottom:10,
-      backgroundColor:'green',
-      alignItems:'center',
-      justifyContent:'center',
+  editButton: {
+    position: 'absolute',
+    top: 10,
+    right: 110,
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  deleteButtonText:{
-    color:'white'
+  deleteButton: {
+    position: 'absolute',
+    top: 10,
+    right: 30,
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  strikeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 70,
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteButtonText: {
+    color: 'white'
   },
 });
