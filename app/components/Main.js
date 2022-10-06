@@ -226,13 +226,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 11,
     right: 10,
-    bottom: 80,
+    bottom: 70,
     backgroundColor: '#FFA500',
-    width: 90,
-    height: 90,
+    width: 70,
+    height: 70,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0,
+    shadowRadius: 4.65,
     elevation: 8
   },
   addButtonText: {

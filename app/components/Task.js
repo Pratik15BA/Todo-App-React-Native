@@ -23,15 +23,15 @@ export default class Task extends React.Component {
           <Text style={this.props.val.completed ? styles.strike : styles.taskText}>{this.props.val.task}</Text>
 
           <TouchableOpacity onPress={this.props.updateMethod} style={this.state.touched ? styles.editButton : styles.hidden}>
-            <Text style={styles.deleteButtonText}><FontAwesome name="edit" size={24} color="black" /></Text>
+            <Text style={styles.deleteButtonText}><FontAwesome name="edit" size={30} color="black" /></Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.props.strikeMethod} style={this.state.touched ? styles.strikeButton : styles.hidden}>
-            <Text style={styles.deleteButtonText}><AntDesign name="checkcircle" size={24} color="black" /></Text>
+            <Text style={styles.deleteButtonText}><AntDesign name="checkcircle" size={30} color="black" /></Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.props.deleteMethod} style={this.state.touched ? styles.deleteButton : styles.hidden}>
-            <Text style={styles.deleteButtonText}><AntDesign name="delete" size={24} color="black" /></Text>
+            <Text style={styles.deleteButtonText}><AntDesign name="delete" size={30} color="black" /></Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 10,
     borderRightColor: '#00D989',
     fontSize: 15,
+    fontStyle: 'italic',
   },
   dateBorder: {
     paddingLeft: 20,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
   editButton: {
     position: 'absolute',
     top: 10,
-    right: 90,
+    right: 110,
     width: 30,
     height: 30,
     alignItems: 'center',
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
   strikeButton: {
     position: 'absolute',
     top: 10,
-    right: 60,
+    right: 70,
     width: 30,
     height: 30,
     alignItems: 'center',
