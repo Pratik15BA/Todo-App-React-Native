@@ -1,24 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Main from './app/components/Main'
-import {
-  useFonts,
-  Oswald_200ExtraLight,
-  Oswald_300Light,
-  Oswald_400Regular,
-  Oswald_500Medium,
-  Oswald_600SemiBold,
-  Oswald_700Bold,
-} from '@expo-google-fonts/oswald';
+import { BackHandler, Alert } from 'react-native';
 
-export default function App() {
-  let [fontsLoaded] = useFonts({
-    Oswald_200ExtraLight,
-    Oswald_300Light,
-    Oswald_400Regular,
-    Oswald_500Medium,
-    Oswald_600SemiBold,
-    Oswald_700Bold,
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded,
+  setTestDeviceIDAsync,
+} from 'expo-ads-admob';
+
+const interstitialID = "ca-app-pub-3940256099942544/1033173712";
+
+function showInterstitial() {
+  AdMobInterstitial.setAdUnitID(interstitialID);
+  AdMobInterstitial.requestAdAsync().then(() => {
+    AdMobInterstitial.showAdAsync().catch((e) => console.log(e));
   });
+}
+
+function backPress (){
+  Alert.alert("Back Pressed");
+}
+export default function App() {
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', showInterstitial);
+    return () => BackHandler.removeEventListener('hardwareBackPress', showInterstitial).then(BackHandler.exitApp());
+  }, []);
+
   return (
     <Main/>
   );

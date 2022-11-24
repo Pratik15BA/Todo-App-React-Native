@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'white',
     padding: 5,
-    fontFamily: 'Oswald_700Bold'
   },
   logo: {
     width: 50,
